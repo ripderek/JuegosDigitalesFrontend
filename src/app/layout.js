@@ -1,5 +1,6 @@
 import localFont from "next/font/local";
 import "./globals.css";
+import { NavbarWithMegaMenu, Navbar1, SearchBar } from "@/Components";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -23,7 +24,10 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <Navbar1 />
+        <SearchBar />
+        <NavbarWithMegaMenu />
+        <div className="mx-auto max-w-screen-xl">{children}</div>
       </body>
     </html>
   );
