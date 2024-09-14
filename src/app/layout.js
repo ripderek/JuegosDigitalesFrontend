@@ -27,7 +27,7 @@ export default function RootLayout({ children }) {
         <Navbar1 />
         <SearchBar />
         <NavbarWithMegaMenu />
-        <div className="mx-auto max-w-screen-xl">{children}</div>
+        <div className="mx-auto  max-w-screen-2xl">{children}</div>
       </body>
     </html>
   );

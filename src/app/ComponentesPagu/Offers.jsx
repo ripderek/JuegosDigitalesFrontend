@@ -18,7 +18,7 @@ const Ofertas = [
 ];
 export function Offers() {
   return (
-    <div className="mt-4 rounded-sm mb-20">
+    <div className="mt-4 rounded-sm mb-20 p-2">
       <div className="mx-auto w-full relative group transform transition-transform duration-300 hover:scale-105">
         <Image
           src={OferHeader}

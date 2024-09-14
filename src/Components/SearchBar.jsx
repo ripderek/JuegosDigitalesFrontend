@@ -15,7 +15,6 @@ import {
 } from "@heroicons/react/24/solid";
 /* CONSTANTE PARA SIMULAR LOS DATOS QUE TIENE EL SELECT PARA PODER FILTRAR LO QUE SE BUSCA   */
 import Image from "next/image";
-import logoImagen from "../../public/images/logo.png";
 import { Carrito } from "./Carrito";
 const SelectOptions = [
   {
@@ -38,12 +37,17 @@ export function SearchBar() {
     <Navbar
       variant="gradient"
       color="blue-gray"
-      className="mx-auto max-w-screen-xl from-black/20 to-gray-900 px-24  rounded-none"
+      className="mx-auto max-w-screen-2xl from-black/20 to-gray-900 px-24  rounded-none"
     >
       <Carrito open={openDraw} closeDrawer={() => setOpenDraw(false)} />
       <div className="p-2">
         <div className="flex flex-wrap items-center justify-between gap-y-4 text-white">
-          <Image src={logoImagen} width={200} alt="Picture of the author" />
+          <Image
+            src={"/images/logo.png"}
+            width={200}
+            height={200}
+            alt="Picture of the author"
+          />
           <div className="ml-auto flex gap-1 md:mr-4 bg-white  rounded-lg">
             <div className="relative flex w-full gap-2 md:w-max ml-4">
               <Input

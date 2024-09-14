@@ -45,7 +45,7 @@ const Icons = [
 
 export function Navbar1() {
   return (
-    <div className=" bg-transparent p-2 grid grid-cols-2  px-24">
+    <div className=" bg-transparent p-2 grid grid-cols-2  ">
       <div>
         <div className="text-xs">
           ¡REBAJAS! de invierno, 90 % Juegos PS4 Y PS5😲
