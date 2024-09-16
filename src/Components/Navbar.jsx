@@ -18,102 +18,14 @@ import {
   Bars3Icon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import {
-  Bars4Icon,
-  GlobeAmericasIcon,
-  NewspaperIcon,
-  PhoneIcon,
-  RectangleGroupIcon,
-  SquaresPlusIcon,
-  SunIcon,
-  TagIcon,
-  UserGroupIcon,
-} from "@heroicons/react/24/solid";
+import { Bars4Icon } from "@heroicons/react/24/solid";
 import { ListaCategorias } from "@/Components/ListaCategorias";
 import Image from "next/image";
+//Importar los items que estan en formato JSON para un mejor manejo
+import { Items } from "@/app/data/ItemsNavbar";
 function NavListMenu() {
   //Nuevo estado con todo lo necesiario para los menus del navbar
-  const [itemsMenus, SetItemMenus] = useState([
-    {
-      id: 0,
-      itenName: "PS3",
-      isMenuOpen: false,
-      //aqui para ver si tiene packs disponibles esa plataforma
-      imgPack: "/images/Packs/ps3pack.jpg",
-      pack: [
-        {
-          title: "TODOS LOS PACKS",
-          // icon: SquaresPlusIcon,
-        },
-        {
-          title: "3 JUEGOS EN 1",
-        },
-        {
-          title: "4 JUEGOS EN 1",
-        },
-        {
-          title: "5 JUEGOS EN 1",
-        },
-        {
-          title: "6 JUEGOS EN 1",
-        },
-      ],
-      tiposJuegos: [
-        {
-          TitleTipe: "FÍSICOS",
-        },
-        {
-          TitleTipe: "DIGITALES",
-        },
-      ],
-    },
-    {
-      id: 1,
-      itenName: "PS4",
-      isMenuOpen: false,
-      //aqui para ver si tiene packs disponibles esa plataforma
-      imgPack: "/images/Packs/packps4.jpg",
-      pack: [
-        {
-          title: "TODOS LOS PACKS",
-        },
-        {
-          title: "3 JUEGOS EN 1",
-        },
-        {
-          title: "4 JUEGOS EN 1",
-        },
-        {
-          title: "5 JUEGOS EN 1",
-        },
-        {
-          title: "6 JUEGOS EN 1",
-        },
-      ],
-      tiposJuegos: [
-        {
-          TitleTipe: "FÍSICOS",
-        },
-        {
-          TitleTipe: "DIGITALES",
-        },
-      ],
-      extras: [
-        {
-          title: "VR",
-          imgExtra: "/images/Packs/ps3pack.jpg",
-        },
-        {
-          title: "PREVENTA ",
-          imgExtra: "/images/Packs/ps3pack.jpg",
-        },
-        {
-          title: "ESTRENOS",
-          imgExtra: "/images/Packs/ps3pack.jpg",
-        },
-      ],
-    },
-  ]);
+  const [itemsMenus, SetItemMenus] = useState(Items);
 
   // Función para manejar el cambio de estado de los menús
   const handleMenuToggle = (id) => {
@@ -126,134 +38,99 @@ function NavListMenu() {
       )
     );
   };
-
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const renderItems = (id) => {
     const selectedMenu = itemsMenus.find((menu) => menu.id === id); // Encuentra el menú correspondiente por id
+    //funcion para hacer dinamico el posicionamiento de la imagen:
+    const renderContent = (itemIMG, itemIMGPosition, items) => {
+      const renderImage = () => (
+        <div>
+          <Image
+            src={itemIMG}
+            width={200}
+            height={200}
+            alt="Picture of the author"
+          />
+        </div>
+      );
 
+      const renderMenuItems = () => (
+        <div>
+          {items.map(({ title }, key) => (
+            <a href="#" key={key}>
+              <MenuItem className="flex items-center gap-3 border-none hover:bg-yellow-900 rounded-none">
+                <div>
+                  <Typography
+                    variant="h6"
+                    color="white"
+                    className="flex items-center text-sm font-bold"
+                  >
+                    {title}
+                  </Typography>
+                </div>
+              </MenuItem>
+            </a>
+          ))}
+        </div>
+      );
+
+      switch (itemIMGPosition) {
+        case "left":
+          return (
+            <div className="flex border-none">
+              {itemIMG && renderImage()}
+              {renderMenuItems()}
+            </div>
+          );
+        case "right":
+          return (
+            <div className="flex border-none">
+              {renderMenuItems()}
+              {itemIMG && renderImage()}
+            </div>
+          );
+        case "top":
+          return (
+            <div className="flex flex-col border-none">
+              {itemIMG && renderImage()}
+              {renderMenuItems()}
+            </div>
+          );
+        case "bottom":
+          return (
+            <div className="flex flex-col border-none">
+              {renderMenuItems()}
+              {itemIMG && renderImage()}
+            </div>
+          );
+        default:
+          return <div className="flex border-none">{renderMenuItems()}</div>;
+      }
+    };
     return (
       <div className="flex border-none ">
-        {/* PACK DE JUEGOS */}
-        <div>
-          <div className="mx-auto items-center text-center mb-2">
-            <Typography variant="h6" color="white">
-              PACKS DE JUEGOS
-            </Typography>
-          </div>
-          {/* DIVIDIR EN DOS PARTES UN DIV PARA QUE LOS PACKS SALGAN EN LA IZQUIERDA Y EL RESTO A LA DERECHA */}
-          <div className=" flex border-none">
-            {/*IMAGEN PACK */}
-            <div>
-              <Image
-                src={selectedMenu.imgPack}
-                width={200}
-                height={200}
-                alt="Picture of the author"
-              />
-            </div>
-            {/* RECORRER LOS PACKS */}
-            <div>
-              {selectedMenu?.pack.map(
-                ({ icon: Icon, title, description }, key) => (
-                  <a href="#" key={key}>
-                    <MenuItem className="flex items-center gap-3 border-none hover:bg-yellow-900 rounded-none">
-                      {/* 
-                <div className="flex items-center justify-center rounded-lg !bg-blue-gray-50 p-2">
-                  <UserGroupIcon className="h-5 w-5 text-blue-gray-700" />
+        {/* PREGUNTAR SI EL ARRAY SELECCIONADO CONTIENE ITEMS Y CREAR UN DIV POR CADA ARRAY DEL OBJETO */}
+        {selectedMenu?.items && (
+          <>
+            {selectedMenu.items.map(
+              ({ itemTitle, itemIMG, itemIMGPosition, items }, key) => (
+                <div>
+                  <div className="mx-auto items-center text-center mb-2">
+                    <Typography variant="h6" color="white">
+                      {itemTitle}
+                    </Typography>
+                  </div>
+                  {/* Usar renderContent para manejar la posición dinámica de la imagen */}
+                  {renderContent(itemIMG, itemIMGPosition, items)}
                 </div>
-                */}
-                      <div>
-                        <Typography
-                          variant="h6"
-                          color="white"
-                          className="flex items-center text-sm font-bold"
-                        >
-                          {title}
-                        </Typography>
-                        {/* <Typography
-                    variant="paragraph"
-                    className="text-xs !font-medium text-blue-gray-500"
-                  >
-                    {description}
-                  </Typography> */}
-                      </div>
-                    </MenuItem>
-                  </a>
-                )
-              )}
-            </div>
-          </div>
-        </div>
-        {/* TIPOS  DE JUEGOS */}
-        <div>
-          <div>
-            <div className="mx-auto items-center text-center mb-2">
-              <Typography variant="h6" color="white">
-                JUEGOS
-              </Typography>
-            </div>
-            <div>
-              {selectedMenu?.tiposJuegos.map(({ TitleTipe }, key) => (
-                <a href="#" key={key}>
-                  <MenuItem className="flex items-center gap-3  border-none hover:bg-yellow-900 rounded-none  ">
-                    {/* 
-                <div className="flex items-center justify-center rounded-lg !bg-blue-gray-50 p-2">
-                  <UserGroupIcon className="h-5 w-5 text-blue-gray-700" />
-                </div>
-                */}
-                    <div>
-                      <Typography
-                        variant="h6"
-                        color="white"
-                        className="flex items-center text-sm font-bold"
-                      >
-                        {TitleTipe}
-                      </Typography>
-                      {/* <Typography
-                    variant="paragraph"
-                    className="text-xs !font-medium text-blue-gray-500"
-                  >
-                    {description}
-                  </Typography> */}
-                    </div>
-                  </MenuItem>
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
-        {/* ADICIONALES */}
-        {selectedMenu?.extras && (
-          <div>
-            <div>
-              <div className="mx-auto items-center text-center mb-2">
-                <Typography variant="h6" color="white">
-                  EXTRAS
-                </Typography>
-              </div>
-              <div>
-                {selectedMenu.extras.map(({ title, imgExtra }, key) => (
-                  <a href="#" key={key}>
-                    <MenuItem className="flex items-center gap-3  border-none hover:bg-yellow-900 rounded-none">
-                      <div>
-                        <Typography
-                          variant="h6"
-                          color="white"
-                          className="flex items-center text-sm font-bold"
-                        >
-                          {title}
-                        </Typography>
-                      </div>
-                    </MenuItem>
-                  </a>
-                ))}
-              </div>
-            </div>
-          </div>
+              )
+            )}
+          </>
         )}
       </div>
     );
   };
+
   return (
     <>
       {/* RECORRER LOS ITEMS DEL OBJETO PARA RENDERIZAR LOS MENUS DE MANERA DINAMICA  */}
