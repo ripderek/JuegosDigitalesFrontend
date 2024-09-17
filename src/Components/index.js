@@ -3,5 +3,6 @@ export * from "@/Components/Navbar1";
 export * from "@/Components/SearchBar";
 export * from "@/Components/Carrito";
 export * from "@/Components/ListaCategorias";
+export * from "@/Components/Carrusel";
 
 //

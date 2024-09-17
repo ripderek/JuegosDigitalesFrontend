@@ -3,6 +3,21 @@ export const Items = [
     id: 0,
     itenName: "PS3",
     isMenuOpen: false,
+    //items que solo son botones con URL XD
+    links: [
+      {
+        Title: "🎁Pack Deals🎁",
+        Url: "/packDeals",
+      },
+      {
+        Title: "🎯 OPINIONES",
+        Url: "/opiniones",
+      },
+      {
+        Title: "🏆 PREMIOS GAMER",
+        Url: "/premios",
+      },
+    ],
     //cada item representa un nuevo div
     items: [
       {

@@ -108,14 +108,14 @@ function NavListMenu() {
       }
     };
     return (
-      <div className="flex border-none ">
+      <div className="flex border-none bg-opacity-20">
         {/* PREGUNTAR SI EL ARRAY SELECCIONADO CONTIENE ITEMS Y CREAR UN DIV POR CADA ARRAY DEL OBJETO */}
         {selectedMenu?.items && (
           <>
             {selectedMenu.items.map(
               ({ itemTitle, itemIMG, itemIMGPosition, items }, key) => (
                 <div>
-                  <div className="mx-auto items-center text-center mb-2">
+                  <div className="mx-auto items-center text-center mb-2 bg-opacity-20">
                     <Typography variant="h6" color="white">
                       {itemTitle}
                     </Typography>
@@ -177,19 +177,26 @@ function NavListMenu() {
 
 function NavList() {
   return (
-    <List className="  p-0  lg:flex-row ">
+    <List className="  p-0  lg:flex-row bg-opacity-20">
       <NavListMenu />
-      {/* <Typography
-        as="a"
-        href="#"
-        variant="small"
-        color="blue-gray"
-        className="font-medium"
-      >
-        <ListItem className="flex items-center gap-2 py-2 pr-4">
-          Contact Us
-        </ListItem>
-      </Typography>*/}
+
+      {/* Recorre cada ítem en Items y luego sus links */}
+      {Items.map((item, idx) =>
+        item.links?.map(({ Title, Url }, index) => (
+          <Typography
+            as="a"
+            href={Url}
+            variant="small"
+            color="white"
+            className="flex items-center text-sm"
+            key={`${idx}-${index}`}
+          >
+            <ListItem className="flex items-center gap-2 py-2 pr-4 rounded-none hover:bg-transparent hover:text-yellow-800">
+              {Title}
+            </ListItem>
+          </Typography>
+        ))
+      )}
     </List>
   );
 }
@@ -206,13 +213,13 @@ export function NavbarWithMegaMenu() {
   const [openCategorias, setOpenCategorias] = useState(false);
 
   return (
-    <div className="flex mx-auto max-w-screen-2xl  ">
+    <div className="flex mx-auto max-w-screen-2xl sticky top-0 z-40 bg-opacity-85">
       <ListaCategorias
         open={openCategorias}
         closeDrawer={() => setOpenCategorias(false)}
       />
       <div
-        className="bg-yellow-800 w-auto flex gap-1 mx-auto items-center cursor-pointer"
+        className="bg-yellow-800 w-auto flex gap-1 mx-auto items-center cursor-pointer "
         onClick={() => setOpenCategorias(true)}
       >
         <Bars4Icon
@@ -222,9 +229,9 @@ export function NavbarWithMegaMenu() {
         />
         <span className="text-black mr-2 mx-auto">Categorias</span>
       </div>
-      <Navbar className="mx-auto  rounded-none bg-gray-900/90 border-none p-0">
-        <div className="flex  text-blue-gray-900">
-          <div className="hidden lg:block">
+      <Navbar className="mx-auto  rounded-none bg-gray-900/90 border-none p-0  bg-opacity-20">
+        <div className="flex  text-blue-gray-900 bg-opacity-20">
+          <div className="hidden lg:block bg-opacity-20">
             <NavList />
           </div>
 

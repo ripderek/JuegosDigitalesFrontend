@@ -42,41 +42,28 @@ export function SearchBar() {
       <Carrito open={openDraw} closeDrawer={() => setOpenDraw(false)} />
       <div className="p-2">
         <div className="flex flex-wrap items-center justify-between gap-y-4 text-white">
-          <Image
-            src={"/images/logo.png"}
-            width={200}
-            height={200}
-            alt="Picture of the author"
-          />
-          <div className="ml-auto flex gap-1 md:mr-4 bg-white  rounded-lg">
-            <div className="relative flex w-full gap-2 md:w-max ml-4">
-              <Input
-                variant="static"
-                type="search"
-                color="black"
-                placeholder="Buscar ..."
-                className="pr-20 "
-                containerProps={{
-                  className: "min-w-[288px] ",
-                }}
-              />
-            </div>
-            <div className="w-72 text-black">
-              <Select
-                variant="standard"
-                value={value}
-                onChange={(val) => setValue(val)}
-                className="text-gray-800"
-              >
-                {SelectOptions.map(({ name }, index) => (
-                  <Option key={index} value={name}>
-                    {name}
-                  </Option>
-                ))}
-              </Select>
-            </div>
+          <div>
+            <Image
+              src={"/images/logo.png"}
+              width={200}
+              height={200}
+              alt="Picture of the author"
+            />
+          </div>
+          <div className=" w-3/5 flex gap-1 md:mr-4  bg-transparent border-4 rounded-none">
+            <Input
+              variant="static"
+              type="search"
+              color="white"
+              placeholder="Buscar ..."
+              className="pr-20 "
+              containerProps={{
+                className: "min-w-[288px] bg-transparent ml-2",
+              }}
+            />
+
             <IconButton variant="text" color="black" className="mx-auto mt-1">
-              <MagnifyingGlassIcon className="h-4 w-4  " color="black " />
+              <MagnifyingGlassIcon className="h-6 w-6  " color="white" />
             </IconButton>
           </div>
           <div className="w-auto flex-col cursor-pointer">
